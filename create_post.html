@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <div class="content-section" style="margin-top: 4rem; margin-left: 10rem" >
+        <h3>Create a New Post!</h3>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{{ legend }}</legend>
+                    <div class="form-group" style="margin-right: 20rem; margin-top: 2rem; margin-left: 5rem">
+                    {{ form.title.label(class="form-control-label") }}
+                    {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.title(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group" style="margin-right: 20rem; margin-top: 2rem; margin-left: 5rem">
+                    {{ form.content.label(class="form-control-label") }}
+                    {% if form.content.errors %}
+                        {{ form.content(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.content.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.content(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group" style="margin-left: 5rem">
+                <input class="btn btn-outline-info" id="submit" name="submit" type="submit" value="Share It" style="color: #ffffff; background-color: #4169e1">
+            </div>
+        </form>
+
+
+       <div class="content-section" style="margin-top: 5rem">
+        <h3>Older Posts</h3>
+        <hr color="white" size="1">
+          {% for post in posts %}
+           <div id="rectangle" style="width: 1000px; height: 300px; background-color:white">
+            <article class="media content-section" style="margin-left: 50px; margin-top: 5rem">
+              <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+              <div class="media-body">
+                <div class="article-metadata">
+                  <a class="mr-2" href="{{ url_for('account', username=post.author.username)}}">{{ post.author.username }}</a>
+                  <small class="post-date">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                </div>
+                <h2><a class="post-title" href="{{ url_for('post', post_id=post.id)}}">{{ post.title }}</a></h2>
+                <div class="post-content">{{ post.content }}</div>
+              </div>
+            </article>
+           </div>
+          {% endfor %}
+       </div>
+
+
+    </div>
+
+{% endblock content %}

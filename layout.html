@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>FollowTheFood</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/vendor/bootstrap/css/bootstrap.min.css " rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Custom styles for this template -->
+  <link href="../static/css/modern-business.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">FollowTheFood</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+
+          {% if current_user.is_authenticated %}
+
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('new_post') }}">Post</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('account') }}">Account</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+              </li>
+            </ul>
+            <div class="d-flex justify-content-center h-100">
+                <div class="searchbar">
+                  <input id="search-food" class="search_input" type="text" name="" placeholder="Search...">
+                  <a id="search-button" class="search_icon"><i class="fas fa-search"></i></a>
+                </div>
+            </div>
+
+          {% else %}
+
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+              </li>
+            </ul>
+            <div class="d-flex justify-content-center h-100">
+                <div class="searchbar">
+                  <input id="search-food" class="search_input" type="text" name="" placeholder="Search...">
+                  <a id="search-button" class="search_icon"><i class="fas fa-search"></i></a>
+                </div>
+            </div>
+            {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" style="margin-top: 25px; background-color: #87ceeb; padding: 15px; width: 100%"/>
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+
+  <!-- Footer -->
+    <footer>
+		<div class='footer-main'>
+			<div class='socmedia-icons'>
+                <a href="">
+                    <img src='https://i.postimg.cc/QFg3mZQ0/twitter-round-1.png' class='socmedia'> </a>
+				<a href="https://www.facebook.com/">
+                    <img src='https://i.postimg.cc/1fqPgqfx/facebook-round-1.png' class='socmedia'> </a>
+                <a href="https://www.instagram.com/_followthefood_/">
+				    <img src='https://i.postimg.cc/xk0SFpgY/instagram-round.png' class='socmedia'> </a>
+                <a href="">
+				    <img src='https://i.postimg.cc/RWxmwZHW/github-1.png' class='socmedia'> </a>
+			</div>
+			<div class='newsletter'>
+				<label for='subscription'>Sign up for more informations!</label>
+				<input type="email" class='subscription' label="subscription" placeholder=' &nbsp Your Email Address'>
+				<a href={{ url_for('register') }}>
+                <button type="button" class='subscribe-btn'>SUBSCRIBE</button></a>
+			</div>
+  		</div>
+  		<div class='footer-bottom'>
+  			<p>©️ 2021  FollowTheFood</p>
+  		</div>
+  	</footer>
+
+
+  	<style>
+  		footer {
+            bottom: 0;
+            position: absolute;
+  			width: 100%;
+            height: 40px;
+  			display: flex;
+  			justify-content: center;
+  			flex-direction: column;
+  		}
+  		.footer-main {
+  			text-align: center;
+  			color: #d1d1d1;
+  			height: 11rem;
+  			background-color: #4e555b;
+  		}
+  		.footer-bottom {
+  			text-align: center;
+  			color: #d1d1d1;
+  			height: 3rem;
+  			background-color: #1f1f1f;
+  		}
+  		label {
+  			font-family: Trebuchet, sans-serif;
+  			font-size: 0.9rem;
+  			margin-right: 1rem;
+  		}
+  		.subscription {
+  			width: 16rem;
+  			height: 1.4rem;
+  			background-color: #2b2b2b;
+  			border-radius: 4px;
+  			border: 1.4px solid #d1d1d1;
+  		}
+  		.subscribe-btn {
+  			font-family: Trebuchet, sans-serif;
+  			color: #d1d1d1;
+  			height: 1.7rem;
+  			width: 8rem;
+  			background-color: #2b2b2b;
+  			border-radius: 4px;
+  			border: 1.4px solid #d1d1d1;
+  		}
+  		.subscription, select, textarea{
+    		color: #d1d1d1;
+		}
+		.socmedia {
+			width: 2.4rem;
+			height: 2.4rem;
+		}
+		.socmedia-icons {
+			margin-top: 1rem;
+			margin-bottom: 1.5rem;
+		}
+	</style>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      $("#search-button").click(function(){
+        var query = $("#search-food").val();
+          if (query != "") {
+              $.ajax({
+                  url: 'db-search',
+                  method: 'GET',
+                  data: {query:query},
+                  success: function(data){
+                      window.location.href = data;
+                  }
+              });
+          }
+      });
+    });
+</script>
+
+<style>
+    body {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom:  10rem;
+  padding-top: 3rem;
+  background: #d29d00;
+}
+
+    container {
+   min-height:100%;
+   position:relative;
+}
+
+        article {
+        position: relative;
+        right: 2rem;
+    }
+
+         .searchbar{
+    margin-bottom: auto;
+    margin-top: auto;
+    margin-right: -7rem;
+    height: 60px;
+    background-color: #d29d00;
+    border-radius: 30px;
+    padding: 10px;
+    }
+
+    .search_input{
+    color: #000000;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color:transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+    }
+
+    .searchbar:hover > .search_input{
+    padding: 0 10px;
+    width: 250px;
+    caret-color:red;
+    transition: width 0.4s linear;
+    }
+
+    .searchbar:hover > .search_icon{
+    background: white;
+    color: #e74c3c;
+    }
+
+    .search_icon{
+    height: 40px;
+    width: 40px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color:white;
+    text-decoration:none;
+    }
+
+    account-img {
+      height: 125px;
+      width: 125px;
+      margin-right: 20px;
+      margin-bottom: 16px;
+    }
+
+    account-heading {
+        font-size: 2.5rem;
+    }
+</style>
+</body>
+
+</html>

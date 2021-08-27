@@ -1,0 +1,155 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <hr/>
+    <hr style="height:2px;border-width:0;color:#d29d00;background-color:#d29d00">  <!-- Page Heading/Breadcrumbs -->
+      <div role="main" class="container">
+        <div class="content-section">
+            <div class="media">
+              <img class="rounded-circle account-img mr-lg-5" src="{{ image_file }}">
+              <div class="media-body align=”justify”">
+                <h1 class="account-heading">{{ current_user.username }}</h1>
+                <h3><p class="account-heading">{{ current_user.email }}</p></h3>
+              </div>
+            </div>
+        </div>
+      </div>
+    <hr style="height:2px;border-width:0;color:#d29d00;background-color:#d29d00">
+
+
+        <!-- Page Content -->
+      <div class="container">
+
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{{ url_for('index') }}">Home</a>
+          </li>
+          <li class="breadcrumb-item active">Account Page</li>
+        </ol>
+
+        <div class="row">
+
+          <!-- Blog Entries Column -->
+          <div class="col-md-8">
+
+{% for post in posts %}
+            <article class="media content-section" style="margin-left: 50px; margin-top: 5rem">
+              <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+              <div class="media-body">
+                <div class="article-metadata">
+                  <a class="mr-2" href="{{ url_for('account', username=post.author.username)}}">{{ post.author.username }}</a>
+                  <small class="post-date">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                </div>
+                <h2><a class="post-title" href="{{ url_for('post', post_id=post.id)}}">{{ post.title }}</a></h2>
+                <div class="post-content">{{ post.content }}</div>
+              </div>
+            </article>
+{% endfor %}
+            <!-- Blog Post -->
+            <div class="card mb-4">
+              <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+              <div class="card-body">
+                <h2 class="card-title">Post Title</h2>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                <a href="#" class="btn btn-primary">Read More &rarr;</a>
+              </div>
+              <div class="card-footer text-muted">
+                Posted on January 1, 2017 by
+                <a href="#">Start Bootstrap</a>
+              </div>
+            </div>
+
+            <!-- Blog Post -->
+            <div class="card mb-4">
+              <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+              <div class="card-body">
+                <h2 class="card-title">Post Title</h2>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                <a href="#" class="btn btn-primary">Read More &rarr;</a>
+              </div>
+              <div class="card-footer text-muted">
+                Posted on January 1, 2017 by
+                <a href="#">Start Bootstrap</a>
+              </div>
+            </div>
+
+            <!-- Blog Post -->
+            <div class="card mb-4">
+              <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+              <div class="card-body">
+                <h2 class="card-title">Post Title</h2>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                <a href="#" class="btn btn-primary">Read More &rarr;</a>
+              </div>
+              <div class="card-footer text-muted">
+                Posted on January 1, 2017 by
+                <a href="#">Start Bootstrap</a>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <ul class="pagination justify-content-center mb-4">
+              <li class="page-item">
+                <a class="page-link" href="#">&larr; Older</a>
+              </li>
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Newer &rarr;</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <!-- /.row -->
+
+      </div>
+      <!-- /.container -->
+    <div role="main" class="container">
+        <div class="content-section">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4"><h3>Account Info</h3></legend>
+                    <div class="form-group">
+                        {{ form.username.label(class="form-control-label") }}
+                        {% if form.username.errors %}
+                            {{ form.username(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.username(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.email.label(class="form-control-label") }}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.picture.label() }}
+                        {{ form.picture(class="form-control-file") }}
+                        {% if form.picture.errors %}
+                            {% for error in form.picture.errors %}
+                                <span class="text-danger">{{ error }}</span></br>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    <input class="btn btn-outline-info" id="submit" name="submit" type="submit" value="Update" style="color: #ffffff; background-color: #4169e1">
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}
