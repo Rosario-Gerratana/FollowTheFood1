@@ -41,25 +41,47 @@
 
 
        <div class="content-section" style="margin-top: 5rem">
+
         <h3>Older Posts</h3>
         <hr color="white" size="1">
           {% for post in posts %}
-           <div id="rectangle" style="width: 1000px; height: 300px; background-color:white">
+           <div id="rectangle" style="width: 60vw; height: 100%; background-color:#d29d00; margin-left: 5rem">
             <article class="media content-section" style="margin-left: 50px; margin-top: 5rem">
-              <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
               <div class="media-body">
-                <div class="article-metadata">
-                  <a class="mr-2" href="{{ url_for('account', username=post.author.username)}}">{{ post.author.username }}</a>
-                  <small class="post-date">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                  <div class="post-details" style="background-color: white; border: 3px solid white; border-radius: 0.25rem 0.25rem 0px 0px">
+                  <div class="post-header-container" style="display: flex; justify-content: flex-start; align-items: center; margin-top: 10px; margin-left: 20px" >
+                      <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}"
+                      style="height: 64px; margin-right: 10px">
+                        <div class="article-metadata">
+                          <a class="mr-2" href="{{ url_for('account', username=post.author.username)}}">{{ post.author.username }}</a>
+                          <small class="post-date">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                          <h2><a class="post-title" href="{{ url_for('post', post_id=post.id)}}">{{ post.title }}</a></h2>
+                        </div>
+                  </div>
+                   <p style="margin-left: 30px; margin-top: 10px">{{ post.content }}</p>
+                  </div>
+                <div class="post-content">
+
+                    <!-- Blog Post -->
+                    <div class="card mb-4">
+                      <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                      <div class="card-body">
+                        <h2 class="card-title">Post Title</h2>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                        <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                      </div>
+                      <div class="card-footer text-muted">
+                        Posted on January 1, 2017 by
+                        <a href="#">Start Bootstrap</a>
+                      </div>
+                    </div>
                 </div>
-                <h2><a class="post-title" href="{{ url_for('post', post_id=post.id)}}">{{ post.title }}</a></h2>
-                <div class="post-content">{{ post.content }}</div>
               </div>
             </article>
            </div>
           {% endfor %}
-       </div>
 
+       </div>
 
     </div>
 
